@@ -12,7 +12,12 @@ async function scrapeCBU() {
     });
   });
 
-  fs.writeFile("faculty.json", JSON.stringify(faculty));
+  console.log(faculty);
+
+  fs.writeFile("faculty.json", JSON.stringify(faculty), function(err) {
+    if (err) throw err;
+    console.log("complete");
+  });
 }
 
 scrapeCBU();
