@@ -4,7 +4,7 @@ const port = 3000;
 const $ = require("cheerio");
 const axios = require("axios");
 
-app.get("/faculty", (req, res) => {
+app.get("/faculty", async (req, res) => {
   // async function scraper(){
 
   // }
