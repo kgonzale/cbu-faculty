@@ -1,25 +1,30 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const $ = require("cheerio");
+const cheerio = require("cheerio");
 const axios = require("axios");
 
 app.get("/faculty", async (req, res) => {
-  // async function scraper(){
-
-  // }
-
-  const html = await axios(
-    "http://catalogs.rutgers.edu/generated/nb-ug_current/pg159.html"
+  const html = await axios("https://www.cbu.edu/faculty-staff").then(
+    res => res.data
   );
 
-  const scrape = $("div.item-container", html).map(item => {
-    return {
-      code: $(".course-annotation", container).text()
-    };
+  const $ = cheerio.load(html);
+
+  let arrayInfo = [];
+
+  $("li.staff-directory-department").map((item, index) => {
+    arrayInfo.push({
+      id: $("h2.staff-directory-department", index)
+        .text()
+        .trim(),
+      name: $("h3.staff-member-name", index)
+        .text()
+        .trim()
+    });
   });
 
-  res.send(scrape);
+  res.send(arrayInfo);
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
