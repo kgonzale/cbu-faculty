@@ -20,9 +20,14 @@ app.get("/faculty", async (req, res) => {
         .trim(),
       name: $("h3.staff-member-name", index)
         .text()
-        .trim()
+        .split("\n")
+        .map(splitString => splitString.trim())
+        .filter(trimString => trimString.length > 0),
+      title: $("p.staff-member-title", index).text()
     });
   });
+
+  console.log(arrayInfo[0]);
 
   res.send(arrayInfo);
 });
