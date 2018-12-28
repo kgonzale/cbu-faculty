@@ -13,6 +13,8 @@ app.get("/faculty", async (req, res) => {
 
   let arrayInfo = [];
 
+  /* using push into of returning an object, because from the call cheerio call
+     we get an object not an array*/
   $("li.staff-directory-department").map((item, index) => {
     arrayInfo.push({
       id: $("h2.staff-directory-department", index)
@@ -23,7 +25,9 @@ app.get("/faculty", async (req, res) => {
         .split("\n")
         .map(splitString => splitString.trim())
         .filter(trimString => trimString.length > 0),
-      title: $("p.staff-member-title", index).text()
+      title: $("p.staff-member-title", index).text(),
+      email: $("p.staff-member-email", index).text(),
+      phone: $("p.staff-member-phone", index).text()
     });
   });
 
