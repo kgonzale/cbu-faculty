@@ -15,23 +15,54 @@ app.get("/faculty", async (req, res) => {
 
   /* using push into of returning an object, because from the call cheerio call
      we get an object not an array*/
-  $("li.staff-directory-department").map((item, index) => {
-    arrayInfo.push({
-      id: $("h2.staff-directory-department", index)
-        .text()
-        .trim(),
-      name: $("h3.staff-member-name", index)
-        .text()
-        .split("\n")
-        .map(splitString => splitString.trim())
-        .filter(trimString => trimString.length > 0),
-      title: $("p.staff-member-title", index).text(),
-      email: $("p.staff-member-email", index).text(),
-      phone: $("p.staff-member-phone", index).text()
-    });
-  });
+  // $("li.staff-directory-department").map((index, item) => {
+  //   arrayInfo.push({
+  //     title: $("p.staff-member-title")
+  //       .text()
+  //       .map((index, item) => {
+  //         return index;
+  //       })
+  //     // id: $("h2.staff-directory-department", item)
+  //     //   .text()
+  //     //   .trim(),
+  //     // name: $("h3.staff-member-name", item)
+  //     //   .text()
+  //     //   .split("\n")
+  //     //   .map(splitString => splitString.trim())
+  //     //   .filter(trimString => trimString.length > 0),
+  //     // title: $("p.staff-member-title")
+  //     //   .eq(index)
+  //     //   .text(),
+  //     // email: $("p.staff-member-email", item).text(),
+  //     // phone: $("p.staff-member-phone", item).text()
+  //   });
+  // });
 
-  console.log(arrayInfo[0]);
+  // let arr = $("li.staff-directory-department")
+  //   .get()
+  //   .map(el => {
+  //     return {
+  //       title: $(el)
+  //         .find("p.staff-member-title")
+  //         .text()
+  //     };
+  //   });
+
+  // console.log(arr);
+
+  // console.log(arrayInfo[1]);
+
+  let arr = $("li.staff-directory-department")
+    .get()
+    .map(el => {
+      return {
+        title: $(el)
+          .find("p.staff-member-title")
+          .text()
+      };
+    });
+
+  console.log(arr);
 
   res.send(arrayInfo);
 });
